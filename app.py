@@ -21,8 +21,8 @@ def visualize_stock_data(stock_data, ticker):
     st.plotly_chart(fig)
 
 def main():
-    st.title("Investment Recommendation Chatbot")
-    user_input = st.text_input("Enter your investment query")
+    st.title("stock analysis bot")
+    user_input = st.text_input("Enter the name of your stock")
 
     if user_input:
         # Preprocess user input
