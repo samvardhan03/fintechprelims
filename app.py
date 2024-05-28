@@ -4,7 +4,6 @@ import plotly.graph_objs as go
 from data_preprocessing import preprocess_text, extract_tickers
 from models import load_model, make_predictions
 from data_loader import load_stock_data_yfinance, engineer_features
-pip install nltk
 def visualize_stock_data(stock_data, ticker):
     fig = go.Figure()
     fig.add_trace(go.Candlestick(x=stock_data.index,
