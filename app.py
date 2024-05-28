@@ -8,7 +8,18 @@ from models import load_model, make_predictions
 from data_loader import load_stock_data_yfinance, engineer_features
 
 def visualize_stock_data(stock_data, ticker):
-    # ... (same as before)
+    fig = go.Figure()
+    fig.add_trace(go.Candlestick(x=stock_data.index,
+                                  open=stock_data['Open'],
+                                  high=stock_data['High'],
+                                  low=stock_data['Low'],
+                                  close=stock_data['Close'],
+                                  name=f'{ticker} Candlestick'))
+    fig.update_layout(title=f'{ticker} Stock Price',
+                      xaxis_title='Date',
+                      yaxis_title='Price (USD)',
+                      xaxis_rangeslider_visible=False)
+    st.plotly_chart(fig)
 
 def main():
     st.title("Investment Recommendation Chatbot")
