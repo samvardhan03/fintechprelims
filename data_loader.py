@@ -2,7 +2,7 @@ import pandas as pd
 import yfinance as yf
 
 def load_stock_data_yfinance(tickers, start_date='2018-01-01', end_date='2023-05-01'):
-    stock_data = yf.download(tickers, start=start_date, end=date=end_date, group_by='Ticker', auto_adjust=True)
+    stock_data = yf.download(tickers, start=start_date, end=end_date, group_by='Ticker', auto_adjust=True)
     return stock_data
 
 def engineer_features(stock_data):
