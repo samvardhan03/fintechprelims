@@ -22,7 +22,7 @@ def visualize_stock_data(stock_data, ticker):
 
 def main():
     st.title("stock analysis bot")
-    user_input = st.text_input("Enter the name of the stocks you wish to buy")
+    user_input = st.text_input("Enter the name of the stocks you wish to buy, the names of ticker codes of all stocks can be found here:'https://shorturl.at/TvQo8' ")
 
     if user_input:
         # Preprocess user input
