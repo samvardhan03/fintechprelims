@@ -21,7 +21,7 @@ def visualize_stock_data(stock_data, ticker):
     st.plotly_chart(fig)
 
 def load_stock_data_yfinance(tickers, start_date='2018-01-01', end_date='2023-05-01'):
-    stock_data = yf.download(tickers, start=start_date, end=end_date, group_by='Ticker', auto_adjust=True)
+    stock_data = yf.download(tickers, start=start_date, end=end_date, auto_adjust=True)
     return stock_data
 
 def main():
@@ -51,7 +51,7 @@ def main():
 
             if not stock_data.empty:
                 for ticker in tickers:
-                    if ticker in stock_data.columns.get_level_values('Ticker'):
+                    if ticker in stock_data.columns:
                         visualize_stock_data(stock_data[ticker], ticker)
                     else:
                         st.write(f"No stock data found for the ticker: {ticker}")
