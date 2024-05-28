@@ -13,5 +13,11 @@ def preprocess_text(text):
     return ' '.join(filtered_tokens)
 
 def extract_tickers(text):
-    tickers = re.findall(r'[A-Z]+', text.upper())
-    return tickers
+    pattern = r"\b[A-Z]+\b"
+    tickers = re.findall(pattern, text.upper())
+    return [ticker for ticker in tickers if is_valid_ticker(ticker)]
+
+def is_valid_ticker(ticker):
+    # Add additional validation rules here
+    # For now, we'll consider any uppercase string as a valid ticker
+    return True
