@@ -1,9 +1,7 @@
-import nltk
 import re
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import PorterStemmer
-nltk.download('stopwords')
 
 stop_words = set(stopwords.words('english'))
 stemmer = PorterStemmer()
@@ -17,4 +15,3 @@ def preprocess_text(text):
 def extract_tickers(text):
     tickers = re.findall(r'[A-Z]+', text.upper())
     return tickers
-
