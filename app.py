@@ -3,7 +3,7 @@ import pandas as pd
 import nltk
 nltk.download('all')
 import plotly.graph_objs as go
-from data_preprocessing import preprocess_text, extract_tickers_from_query
+from data_preprocessing import preprocess_text, extract_tickers
 from models import load_model, make_predictions
 from data_loader import load_stock_data_yfinance, engineer_features
 
@@ -29,12 +29,12 @@ def main():
         # Preprocess user input
         processed_input = preprocess_text(user_input)
 
-        # Extract tickers from the query
-        tickers = extract_tickers_from_query(user_input)
+        # Extract tickers from the input
+        tickers = extract_tickers(user_input)
 
         if not tickers:
             # Handle general investment queries
-            st.write("Based on your query, we recommend the following general investment advice:")
+            st.write("Based on your query, it seems like a general investment question. Here are some general investment tips:")
             st.write("- Diversify your portfolio across different asset classes and sectors.")
             st.write("- Consider your risk tolerance and investment horizon.")
             st.write("- Regularly review and rebalance your portfolio.")
