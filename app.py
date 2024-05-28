@@ -1,5 +1,7 @@
 import streamlit as st
 import pandas as pd
+import nltk
+nltk.download('all')
 import plotly.graph_objs as go
 from data_preprocessing import preprocess_text, extract_tickers
 from models import load_model, make_predictions
