@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-pip install plotly
 import plotly.graph_objs as go
 from data_preprocessing import preprocess_text, extract_tickers
 from models import load_model, make_predictions
