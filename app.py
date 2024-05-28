@@ -4,7 +4,6 @@ import nltk
 nltk.download('all')
 import plotly.graph_objs as go
 from data_preprocessing import preprocess_text, extract_tickers
-from data_loader import load_stock_data_yfinance
 
 def visualize_stock_data(stock_data, ticker):
     fig = go.Figure()
@@ -19,6 +18,10 @@ def visualize_stock_data(stock_data, ticker):
                       yaxis_title='Price (USD)',
                       xaxis_rangeslider_visible=False)
     st.plotly_chart(fig)
+
+def load_stock_data_yfinance(tickers, start_date='2018-01-01', end_date='2023-05-01'):
+    stock_data = yf.download(tickers, start=start_date, end=end_date, group_by='Ticker', auto_adjust=True)
+    return stock_data
 
 def main():
     st.title("Investment Recommendation Chatbot")
@@ -39,13 +42,20 @@ def main():
             st.write("- Regularly review and rebalance your portfolio.")
             st.write("- Stay disciplined and invest regularly.")
         else:
-            stock_data = load_stock_data_yfinance(tickers)
-            if stock_data.empty:
-                st.write(f"No stock data found for the tickers: {', '.join(tickers)}")
+            try:
+                stock_data = load_stock_data_yfinance(tickers)
+            except Exception as e:
+                st.write(f"Error: {e}")
                 return
 
-            for ticker in tickers:
-                visualize_stock_data(stock_data[ticker], ticker)
+            if not stock_data.empty:
+                for ticker in tickers:
+                    if ticker in stock_data.columns.get_level_values('Ticker'):
+                        visualize_stock_data(stock_data[ticker], ticker)
+                    else:
+                        st.write(f"No stock data found for the ticker: {ticker}")
+            else:
+                st.write(f"No stock data found for the tickers: {', '.join(tickers)}")
 
 if __name__ == "__main__":
     main()
