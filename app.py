@@ -4,6 +4,7 @@ import nltk
 nltk.download('all')
 import plotly.graph_objs as go
 from data_preprocessing import preprocess_text, extract_tickers
+import yfinance as yf
 
 def visualize_stock_data(stock_data, ticker):
     fig = go.Figure()
