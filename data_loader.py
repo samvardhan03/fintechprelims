@@ -6,17 +6,30 @@ def load_stock_data_yfinance(tickers, start_date='2018-01-01', end_date='2023-05
     return stock_data
 
 def engineer_features(stock_data):
-    stock_data = stock_data['Adj Close'].unstack(level=0)
-    stock_data = stock_data.dropna()
+    # Assuming stock_data has a multi-index with levels ('Ticker', 'Date')
+    # We need to get the 'Adj Close' column for each ticker
+    adj_close = stock_data['Adj Close'].unstack('Ticker')
 
-    for ticker in stock_data.columns:
-        stock_data[f'{ticker}_returns'] = stock_data[ticker].pct_change()
-        stock_data[f'{ticker}_SMA_20'] = stock_data[ticker].rolling(window=20).mean()
-        stock_data[f'{ticker}_SMA_50'] = stock_data[ticker].rolling(window=50).mean()
-        stock_data[f'{ticker}_RSI'] = calculate_rsi(stock_data[ticker])
+    # Create an empty DataFrame to store the engineered features
+    engineered_data = pd.DataFrame()
 
-    return stock_data
+    for ticker in adj_close.columns:
+        ticker_data = adj_close[ticker]
 
+        # Calculate returns
+        ticker_data['returns'] = ticker_data.pct_change()
+
+        # Calculate SMA_20 and SMA_50
+        ticker_data['SMA_20'] = ticker_data.rolling(window=20).mean()
+        ticker_data['SMA_50'] = ticker_data.rolling(window=50).mean()
+
+        # Calculate RSI
+        ticker_data['RSI'] = calculate_rsi(ticker_data)
+
+        # Append the engineered features to the engineered_data DataFrame
+        engineered_data = pd.concat([engineered_data, ticker_data], axis=1)
+
+    return engineered_data
 def calculate_rsi(data, window=14):
     delta = data.diff()
     gain, loss = delta.copy(), delta.copy()
