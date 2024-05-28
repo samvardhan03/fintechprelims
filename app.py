@@ -6,7 +6,6 @@ from models import load_model, make_predictions
 from data_loader import load_stock_data_yfinance, engineer_features
 import nltk
 nltk.download('punkt')
-nltk.download('all')
 
 
 def main():
